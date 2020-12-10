@@ -31,16 +31,28 @@
       @wheel="onWheel"
     >
       <div class="flipbook-container" :style="{ transform: `scale(${zoom})` }">
-        <div
-          class="click-to-flip left"
-          :style="{ cursor: canFlipLeft ? 'pointer' : 'auto'}"
-          @click="flipLeft"
+        <slot name="container"
+              v-bind="{
+                  page,
+                  numPages
+              }"
         />
-        <div
-          class="click-to-flip right"
-          :style="{ cursor: canFlipRight ? 'pointer' : 'auto'}"
-          @click="flipRight"
-        />
+        <div class="click-to-flip left">
+          <slot name="left"
+              v-bind="{
+                canFlipLeft,
+                flipLeft
+              }"
+          />
+        </div>
+        <div class="click-to-flip right">
+            <slot name="right"
+                v-bind="{
+                  canFlipRight,
+                  flipRight
+                }"
+           />
+        </div>
         <div :style="{ transform: `translateX(${centerOffsetSmoothed}px)` }">
           <img
             class="page fixed"
